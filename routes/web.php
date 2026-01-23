@@ -24,4 +24,14 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+use Illuminate\Support\Facades\Mail;
+
+Route::get('/test-mail', function () {
+    Mail::raw('Test email from Laravel', function ($msg) {
+        $msg->to('test@example.com')->subject('Mailpit Test 2');
+    });
+
+    return 'Mail sent!';
+});
+
 require __DIR__.'/auth.php';
