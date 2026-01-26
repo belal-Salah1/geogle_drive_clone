@@ -1,0 +1,284 @@
+{
+  "models": [
+    {
+      "name": "File",
+      "properties": [
+        {
+          "name": "//     name",
+          "type": "fillable",
+          "dataType": ""
+        },
+        {
+          "name": "//     path",
+          "type": "fillable",
+          "dataType": ""
+        },
+        {
+          "name": "//     is_folder",
+          "type": "fillable",
+          "dataType": ""
+        },
+        {
+          "name": "//     mime",
+          "type": "fillable",
+          "dataType": ""
+        },
+        {
+          "name": "//     size",
+          "type": "fillable",
+          "dataType": ""
+        },
+        {
+          "name": "//     created_by",
+          "type": "fillable",
+          "dataType": ""
+        },
+        {
+          "name": "//     updated_by",
+          "type": "fillable",
+          "dataType": ""
+        },
+        {
+          "name": "//     parent_id",
+          "type": "fillable",
+          "dataType": ""
+        },
+        {
+          "name": "//     _lft",
+          "type": "fillable",
+          "dataType": ""
+        },
+        {
+          "name": "//     _rgt",
+          "type": "fillable",
+          "dataType": ""
+        },
+        {
+          "name": "//",
+          "type": "fillable",
+          "dataType": ""
+        }
+      ],
+      "methods": [
+        {
+          "name": "isOwnedBy",
+          "params": "$userId"
+        }
+      ],
+      "namespace": "App\\Models"
+    },
+    {
+      "name": "FileShare",
+      "properties": [],
+      "methods": [],
+      "namespace": "App\\Models"
+    },
+    {
+      "name": "starredFile",
+      "properties": [],
+      "methods": [],
+      "namespace": "App\\Models"
+    },
+    {
+      "name": "User",
+      "properties": [
+        {
+          "name": "name",
+          "type": "fillable",
+          "dataType": ""
+        },
+        {
+          "name": "email",
+          "type": "fillable",
+          "dataType": ""
+        },
+        {
+          "name": "password",
+          "type": "fillable",
+          "dataType": ""
+        }
+      ],
+      "methods": [],
+      "namespace": "App\\Models"
+    }
+  ],
+  "controllers": [
+    {
+      "name": "AuthenticatedSessionController",
+      "methods": [
+        {
+          "name": "create",
+          "params": ""
+        },
+        {
+          "name": "store",
+          "params": "LoginRequest $request"
+        },
+        {
+          "name": "destroy",
+          "params": "Request $request"
+        }
+      ],
+      "namespace": "App\\Http\\Controllers\\Auth"
+    },
+    {
+      "name": "ConfirmablePasswordController",
+      "methods": [
+        {
+          "name": "show",
+          "params": ""
+        },
+        {
+          "name": "store",
+          "params": "Request $request"
+        }
+      ],
+      "namespace": "App\\Http\\Controllers\\Auth"
+    },
+    {
+      "name": "EmailVerificationNotificationController",
+      "methods": [
+        {
+          "name": "store",
+          "params": "Request $request"
+        }
+      ],
+      "namespace": "App\\Http\\Controllers\\Auth"
+    },
+    {
+      "name": "EmailVerificationPromptController",
+      "methods": [
+        {
+          "name": "__invoke",
+          "params": "Request $request"
+        }
+      ],
+      "namespace": "App\\Http\\Controllers\\Auth"
+    },
+    {
+      "name": "NewPasswordController",
+      "methods": [
+        {
+          "name": "create",
+          "params": "Request $request"
+        },
+        {
+          "name": "store",
+          "params": "Request $request"
+        }
+      ],
+      "namespace": "App\\Http\\Controllers\\Auth"
+    },
+    {
+      "name": "PasswordController",
+      "methods": [
+        {
+          "name": "update",
+          "params": "Request $request"
+        }
+      ],
+      "namespace": "App\\Http\\Controllers\\Auth"
+    },
+    {
+      "name": "PasswordResetLinkController",
+      "methods": [
+        {
+          "name": "create",
+          "params": ""
+        },
+        {
+          "name": "store",
+          "params": "Request $request"
+        }
+      ],
+      "namespace": "App\\Http\\Controllers\\Auth"
+    },
+    {
+      "name": "RegisteredUserController",
+      "methods": [
+        {
+          "name": "create",
+          "params": ""
+        },
+        {
+          "name": "store",
+          "params": "Request $request"
+        }
+      ],
+      "namespace": "App\\Http\\Controllers\\Auth"
+    },
+    {
+      "name": "VerifyEmailController",
+      "methods": [
+        {
+          "name": "__invoke",
+          "params": "EmailVerificationRequest $request"
+        }
+      ],
+      "namespace": "App\\Http\\Controllers\\Auth"
+    },
+    {
+      "name": "Controller",
+      "methods": [],
+      "namespace": "App\\Http\\Controllers"
+    },
+    {
+      "name": "FileController",
+      "methods": [
+        {
+          "name": "myFiles",
+          "params": ""
+        },
+        {
+          "name": "createFolder",
+          "params": "StoreFolderRequest $request"
+        }
+      ],
+      "namespace": "App\\Http\\Controllers"
+    },
+    {
+      "name": "ProfileController",
+      "methods": [
+        {
+          "name": "edit",
+          "params": "Request $request"
+        },
+        {
+          "name": "update",
+          "params": "ProfileUpdateRequest $request"
+        },
+        {
+          "name": "destroy",
+          "params": "Request $request"
+        }
+      ],
+      "namespace": "App\\Http\\Controllers"
+    }
+  ],
+  "services": [],
+  "relationships": [],
+  "directories": {
+    ".": {
+      "models": [
+        "File",
+        "FileShare",
+        "starredFile",
+        "User"
+      ],
+      "controllers": [
+        "AuthenticatedSessionController",
+        "ConfirmablePasswordController",
+        "EmailVerificationNotificationController",
+        "EmailVerificationPromptController",
+        "NewPasswordController",
+        "PasswordController",
+        "PasswordResetLinkController",
+        "RegisteredUserController",
+        "VerifyEmailController",
+        "Controller",
+        "FileController",
+        "ProfileController"
+      ]
+    }
+  }
+}

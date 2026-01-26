@@ -1,0 +1,253 @@
+{
+  "projectName": "laravel/laravel",
+  "projectVersion": "v12.48.1",
+  "generatedAt": "2026-01-26T15:23:42.638Z",
+  "diagrams": [
+    {
+      "id": "AuthenticatedSessionController-create",
+      "name": "AuthenticatedSessionController::create",
+      "controller": "AuthenticatedSession",
+      "method": "create",
+      "type": "create",
+      "description": "Creates a new resource in AuthenticatedSessionController",
+      "fileName": "AuthenticatedSessionController_create.md",
+      "models": [],
+      "timestamp": "2026-01-26T15:23:42.612Z"
+    },
+    {
+      "id": "AuthenticatedSessionController-store",
+      "name": "AuthenticatedSessionController::store",
+      "controller": "AuthenticatedSession",
+      "method": "store",
+      "type": "create",
+      "description": "Creates a new resource in AuthenticatedSessionController",
+      "fileName": "AuthenticatedSessionController_store.md",
+      "models": [],
+      "timestamp": "2026-01-26T15:23:42.613Z"
+    },
+    {
+      "id": "AuthenticatedSessionController-destroy",
+      "name": "AuthenticatedSessionController::destroy",
+      "controller": "AuthenticatedSession",
+      "method": "destroy",
+      "type": "delete",
+      "description": "Removes a resource from AuthenticatedSessionController",
+      "fileName": "AuthenticatedSessionController_destroy.md",
+      "models": [],
+      "timestamp": "2026-01-26T15:23:42.613Z"
+    },
+    {
+      "id": "ConfirmablePasswordController-show",
+      "name": "ConfirmablePasswordController::show",
+      "controller": "ConfirmablePassword",
+      "method": "show",
+      "type": "show",
+      "description": "Retrieves a specific resource from ConfirmablePasswordController",
+      "fileName": "ConfirmablePasswordController_show.md",
+      "models": [],
+      "timestamp": "2026-01-26T15:23:42.613Z"
+    },
+    {
+      "id": "ConfirmablePasswordController-store",
+      "name": "ConfirmablePasswordController::store",
+      "controller": "ConfirmablePassword",
+      "method": "store",
+      "type": "create",
+      "description": "Creates a new resource in ConfirmablePasswordController",
+      "fileName": "ConfirmablePasswordController_store.md",
+      "models": [],
+      "timestamp": "2026-01-26T15:23:42.613Z"
+    },
+    {
+      "id": "EmailVerificationNotificationController-store",
+      "name": "EmailVerificationNotificationController::store",
+      "controller": "EmailVerificationNotification",
+      "method": "store",
+      "type": "create",
+      "description": "Creates a new resource in EmailVerificationNotificationController",
+      "fileName": "EmailVerificationNotificationController_store.md",
+      "models": [],
+      "timestamp": "2026-01-26T15:23:42.613Z"
+    },
+    {
+      "id": "EmailVerificationPromptController-__invoke",
+      "name": "EmailVerificationPromptController::__invoke",
+      "controller": "EmailVerificationPrompt",
+      "method": "__invoke",
+      "type": "generic",
+      "description": "Handles __invoke operation in EmailVerificationPromptController",
+      "fileName": "EmailVerificationPromptController___invoke.md",
+      "models": [],
+      "timestamp": "2026-01-26T15:23:42.613Z"
+    },
+    {
+      "id": "NewPasswordController-create",
+      "name": "NewPasswordController::create",
+      "controller": "NewPassword",
+      "method": "create",
+      "type": "create",
+      "description": "Creates a new resource in NewPasswordController",
+      "fileName": "NewPasswordController_create.md",
+      "models": [],
+      "timestamp": "2026-01-26T15:23:42.614Z"
+    },
+    {
+      "id": "NewPasswordController-store",
+      "name": "NewPasswordController::store",
+      "controller": "NewPassword",
+      "method": "store",
+      "type": "create",
+      "description": "Creates a new resource in NewPasswordController",
+      "fileName": "NewPasswordController_store.md",
+      "models": [],
+      "timestamp": "2026-01-26T15:23:42.614Z"
+    },
+    {
+      "id": "PasswordController-update",
+      "name": "PasswordController::update",
+      "controller": "Password",
+      "method": "update",
+      "type": "update",
+      "description": "Updates an existing resource in PasswordController",
+      "fileName": "PasswordController_update.md",
+      "models": [],
+      "timestamp": "2026-01-26T15:23:42.614Z"
+    },
+    {
+      "id": "PasswordResetLinkController-create",
+      "name": "PasswordResetLinkController::create",
+      "controller": "PasswordResetLink",
+      "method": "create",
+      "type": "create",
+      "description": "Creates a new resource in PasswordResetLinkController",
+      "fileName": "PasswordResetLinkController_create.md",
+      "models": [],
+      "timestamp": "2026-01-26T15:23:42.614Z"
+    },
+    {
+      "id": "PasswordResetLinkController-store",
+      "name": "PasswordResetLinkController::store",
+      "controller": "PasswordResetLink",
+      "method": "store",
+      "type": "create",
+      "description": "Creates a new resource in PasswordResetLinkController",
+      "fileName": "PasswordResetLinkController_store.md",
+      "models": [],
+      "timestamp": "2026-01-26T15:23:42.614Z"
+    },
+    {
+      "id": "RegisteredUserController-create",
+      "name": "RegisteredUserController::create",
+      "controller": "RegisteredUser",
+      "method": "create",
+      "type": "create",
+      "description": "Creates a new resource in RegisteredUserController",
+      "fileName": "RegisteredUserController_create.md",
+      "models": [],
+      "timestamp": "2026-01-26T15:23:42.614Z"
+    },
+    {
+      "id": "RegisteredUserController-store",
+      "name": "RegisteredUserController::store",
+      "controller": "RegisteredUser",
+      "method": "store",
+      "type": "create",
+      "description": "Creates a new resource in RegisteredUserController",
+      "fileName": "RegisteredUserController_store.md",
+      "models": [],
+      "timestamp": "2026-01-26T15:23:42.615Z"
+    },
+    {
+      "id": "VerifyEmailController-__invoke",
+      "name": "VerifyEmailController::__invoke",
+      "controller": "VerifyEmail",
+      "method": "__invoke",
+      "type": "generic",
+      "description": "Handles __invoke operation in VerifyEmailController",
+      "fileName": "VerifyEmailController___invoke.md",
+      "models": [],
+      "timestamp": "2026-01-26T15:23:42.615Z"
+    },
+    {
+      "id": "FileController-myFiles",
+      "name": "FileController::myFiles",
+      "controller": "File",
+      "method": "myFiles",
+      "type": "generic",
+      "description": "Handles myFiles operation in FileController",
+      "fileName": "FileController_myFiles.md",
+      "models": [
+        "File"
+      ],
+      "timestamp": "2026-01-26T15:23:42.615Z"
+    },
+    {
+      "id": "FileController-createFolder",
+      "name": "FileController::createFolder",
+      "controller": "File",
+      "method": "createFolder",
+      "type": "generic",
+      "description": "Handles createFolder operation in FileController",
+      "fileName": "FileController_createFolder.md",
+      "models": [],
+      "timestamp": "2026-01-26T15:23:42.616Z"
+    },
+    {
+      "id": "ProfileController-edit",
+      "name": "ProfileController::edit",
+      "controller": "Profile",
+      "method": "edit",
+      "type": "update",
+      "description": "Updates an existing resource in ProfileController",
+      "fileName": "ProfileController_edit.md",
+      "models": [],
+      "timestamp": "2026-01-26T15:23:42.616Z"
+    },
+    {
+      "id": "ProfileController-update",
+      "name": "ProfileController::update",
+      "controller": "Profile",
+      "method": "update",
+      "type": "update",
+      "description": "Updates an existing resource in ProfileController",
+      "fileName": "ProfileController_update.md",
+      "models": [],
+      "timestamp": "2026-01-26T15:23:42.616Z"
+    },
+    {
+      "id": "ProfileController-destroy",
+      "name": "ProfileController::destroy",
+      "controller": "Profile",
+      "method": "destroy",
+      "type": "delete",
+      "description": "Removes a resource from ProfileController",
+      "fileName": "ProfileController_destroy.md",
+      "models": [],
+      "timestamp": "2026-01-26T15:23:42.617Z"
+    }
+  ],
+  "statistics": {
+    "totalDiagrams": 20,
+    "byType": {
+      "create": 10,
+      "delete": 2,
+      "show": 1,
+      "generic": 4,
+      "update": 3
+    },
+    "byController": {
+      "AuthenticatedSession": 3,
+      "ConfirmablePassword": 2,
+      "EmailVerificationNotification": 1,
+      "EmailVerificationPrompt": 1,
+      "NewPassword": 2,
+      "Password": 1,
+      "PasswordResetLink": 2,
+      "RegisteredUser": 2,
+      "VerifyEmail": 1,
+      "": 0,
+      "File": 2,
+      "Profile": 3
+    }
+  }
+}
