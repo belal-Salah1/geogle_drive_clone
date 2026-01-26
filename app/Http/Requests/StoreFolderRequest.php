@@ -29,7 +29,7 @@ class StoreFolderRequest extends ParentIdBaseRequest
     public function messages()
     {
         return [
-            'name.unique' => 'Folder :input aleardy exist',
+            'name.unique' => 'Folder :input already exists',
         ];
     }
 }
