@@ -16,7 +16,9 @@ const props = defineProps({
     },
 });
 
-const emit = defineEmits(['close']);
+
+
+const emit = defineEmits(['close','show','hide']);
 const dialog = ref();
 const showSlot = ref(props.show);
 
@@ -25,12 +27,13 @@ watch(
     () => {
         if (props.show) {
             document.body.style.overflow = 'hidden';
+            emit('show');
             showSlot.value = true;
 
             dialog.value?.showModal();
         } else {
+            emit('hide');
             document.body.style.overflow = '';
-
             setTimeout(() => {
                 dialog.value?.close();
                 showSlot.value = false;

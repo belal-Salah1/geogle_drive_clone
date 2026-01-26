@@ -17,10 +17,15 @@ class FileController extends Controller
     public function createFolder(StoreFolderRequest $request)
     {
         $data = $request->validated();
-        $parent = $request->parent();
+        $parent = $request->parent;
         if (! $parent) {
             $parent = $this->getRoot();
         }
+
+        $file = new File;
+        $file->is_folder = 1;
+        $file->name = $data['name'];
+        $parent->appendNode($file);
 
     }
 
