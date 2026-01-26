@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreFolderRequest;
+use App\Models\File;
+use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 
 class FileController extends Controller
@@ -15,7 +17,15 @@ class FileController extends Controller
     public function createFolder(StoreFolderRequest $request)
     {
         $data = $request->validated();
-        $request->parent();
+        $parent = $request->parent();
+        if (! $parent) {
+            $parent = $this->getRoot();
+        }
 
+    }
+
+    private function getRoot()
+    {
+        return File::query()->where('created_by', Auth::id())->whereIsRoot()->firstOrFail();
     }
 }
