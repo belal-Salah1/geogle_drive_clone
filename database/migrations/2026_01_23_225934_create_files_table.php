@@ -21,8 +21,8 @@ return new class extends Migration
             $table->string('mime')->nullable();
             $table->integer('size')->nullable();
             $table->timestamps();
-            $table->foreignIdFor(User::class, 'created_id');
-            $table->foreignIdFor(User::class, 'updated_id');
+            $table->foreignIdFor(User::class, 'created_by');
+            $table->foreignIdFor(User::class, 'updated_by');
             $table->softDeletes();
         });
     }
