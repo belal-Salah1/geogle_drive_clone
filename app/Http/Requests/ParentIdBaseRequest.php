@@ -3,10 +3,8 @@
 namespace App\Http\Requests;
 
 use App\Models\File;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Validation\Rule;
 
 class ParentIdBaseRequest extends FormRequest
 {
@@ -34,11 +32,21 @@ class ParentIdBaseRequest extends FormRequest
     {
         return [
             'parent_id' => [
-                Rule::exists(File::class, 'id')
-                    ->where(function (Builder $query) {
-                        $query->where('is_folder', '=', 1);
-                    })
-                    ->where('created_by', '=', Auth::id()),
+                'nullable',
+                function ($attribute, $value, $fail) {
+                    if ($value === null) {
+                        return; // Allow null values
+                    }
+
+                    $exists = File::where('id', $value)
+                        ->where('is_folder', 1)
+                        ->where('created_by', Auth::id())
+                        ->exists();
+
+                    if (! $exists) {
+                        $fail('The selected parent folder is invalid.');
+                    }
+                },
             ],
         ];
     }

@@ -3,24 +3,29 @@ import Modal from '@/Components/Modal.vue';
 import { defineProps, defineEmits, ref, onActivated, nextTick } from 'vue';
 import InputLabel from '../InputLabel.vue';
 import TextInput from '../TextInput.vue';
-import { useForm, router } from '@inertiajs/vue3';
+import { useForm, router, usePage } from '@inertiajs/vue3';
 import inputError from '../InputError.vue';
 import SecondaryButton from '../SecondaryButton.vue';
 import PrimaryButton from '../PrimaryButton.vue';
 const form = useForm({
   name: '',
+  parent_id: null,
 });
+const page = usePage();
 
 defineProps({
   modelValue: {
     type: Boolean,
   },
 });
+
 const folderNameInput = ref(null);
 
 const emit = defineEmits(['update:modelValue']);
 
 function createFolder() {
+  form.parent_id = page.props.folder ? page.props.folder.id : null;
+  console.log(form.parent_id);
   router.post(route('folder.create'), form.data(), {
     preserveScroll: true,
     onSuccess: () => {
@@ -28,7 +33,11 @@ function createFolder() {
       form.reset();
       //show succcess notification
     },
-    onError: () => {
+    onProcessing: () => {
+      console.log('processing');
+    },
+    onError: (errors) => {
+      console.log('Validation errors:', errors); // Add this
       return folderNameInput.value.focus();
     },
   });

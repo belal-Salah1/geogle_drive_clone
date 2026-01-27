@@ -36,6 +36,7 @@ function openFolder(file) {
         v-for="file of files.data"
         :key="file.id"
         @dblclick="openFolder(file)"
+        class="cursor-pointer"
       >
         <td
           class="bg-white border-b transition duration-300 ease-in-out hover:bg-gray-100 px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900"

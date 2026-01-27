@@ -15,6 +15,7 @@ class FileController extends Controller
         if ($folder) {
             $folder = File::query()->where('created_by', Auth::id())->where('path', $folder)->firstOrFail();
         }
+        // dd($folder);
 
         if (! $folder) {
             $folder = $this->getRoot();
@@ -31,13 +32,14 @@ class FileController extends Controller
 
         $files = FileResource::collection($files);
 
-        return Inertia::render('MyFiles', compact('files'));
+        return Inertia::render('MyFiles', compact('files', 'folder'));
     }
 
     public function createFolder(StoreFolderRequest $request)
     {
         $data = $request->validated();
         $parent = $request->parent;
+        // dd($parent);
         if (! $parent) {
             $parent = $this->getRoot();
         }
@@ -48,10 +50,19 @@ class FileController extends Controller
         $parent->appendNode($file);
         $file->save();
 
+        return redirect()->back();
     }
 
     private function getRoot()
     {
-        return File::query()->where('created_by', Auth::id())->whereIsRoot()->firstOrFail();
+        $root = File::query()->where('created_by', Auth::id())->whereIsRoot()->first();
+        if (! $root) {
+            $root = new File;
+            $root->is_folder = 1;
+            $root->name = 'Root';
+            $root->saveAsRoot();
+        }
+
+        return $root;
     }
 }
