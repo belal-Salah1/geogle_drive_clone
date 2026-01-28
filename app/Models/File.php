@@ -43,6 +43,19 @@ class File extends Model
         return $this->storage_path;
     }
 
+    public function isRoot(): bool
+    {
+        return $this->parent_id === null;
+    }
+
+    public function get_file_size()
+    {
+        $unit = ['B', 'KB', 'MB', 'GB', 'TB'];
+        $power = $this->size > 0 ? floor(log($this->size, 1024)) : 0;
+
+        return number_format($this->size / pow(1024, $power), 2).' '.$unit[$power];
+    }
+
     protected static function boot()
     {
         parent::boot();

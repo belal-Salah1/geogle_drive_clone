@@ -6,7 +6,7 @@ import { router } from '@inertiajs/vue3';
 const { files } = defineProps({
   files: Object,
   folder: Object,
-  ancestors: Array,
+  ancestors: Object,
 });
 
 function openFolder(file) {
@@ -116,7 +116,7 @@ function openFolder(file) {
         <td
           class="bg-white border-b transition duration-300 ease-in-out hover:bg-gray-100 px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900"
         >
-          {{ file.size }} KB
+          {{ file.size }}
         </td>
       </tr>
     </tbody>
