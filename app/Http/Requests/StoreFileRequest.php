@@ -1,0 +1,84 @@
+<?php
+
+namespace App\Http\Requests;
+
+use App\Models\File;
+use Illuminate\Support\Facades\Auth;
+
+class StoreFileRequest extends ParentIdBaseRequest
+{
+    public function prepareForValidation()
+    {
+        $paths = array_filter($this->relative_path ?? [], fn ($f) => $f != null);
+        $this->merge([
+            'file_paths' => $paths,
+            'folder_name' => $this->detectFolderName($paths),
+        ]);
+    }
+
+    public function passedValidation()
+    {
+        $data = $this->validate();
+        $this->replace([
+            'file_tree' => buildFileTree($this->file_paths, $data['files']),
+        ]);
+    }
+
+    /**
+     * Get the validation rules that apply to the request.
+     *
+     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
+     */
+    public function rules(): array
+    {
+        return array_merge(parent::rules(), [
+            'files.*' => ['required', 'file', function ($atribute, $value, $fail) {
+                if (! $this->folder_name) {
+
+                    $file = File::query()
+                        ->where('name', $value->getClientOriginalName())
+                        ->where('created_by', Auth::id())
+                        ->where('parent_id', $this->parent_id)
+                        ->whereNull('deleted_at')
+                        ->exists();
+
+                    if ($file) {
+                        $fail('File '.$value->getClientOriginalName().' already exists in this folder');
+                    }
+                }
+            }],
+            'folder_name' => [
+                'nullable',
+                'string',
+                function ($atribute, $value, $fail) {
+                    if ($value) {
+
+                        $file = File::query()
+                            ->where('name', $value)
+                            ->where('created_by', Auth::id())
+                            ->where('parent_id', $this->parent_id)
+                            ->whereNull('deleted_at')
+                            ->exists();
+
+                        if ($file) {
+                            $fail('Folder '.$value.' already exists ');
+                        }
+                    }
+                },
+
+            ],
+        ]);
+    }
+
+    public function detectFolderName($paths)
+    {
+        if (! $paths) {
+            return null;
+        }
+        $parts = explode('/', $paths[0]);
+
+        return $parts[0];
+    }
+
+    private function buildFileTree($filePaths, $files) {}
+}

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreFileRequest;
 use App\Http\Requests\StoreFolderRequest;
 use App\Http\Resources\FileResource;
 use App\Models\File;
@@ -55,6 +56,13 @@ class FileController extends Controller
         $file->save();
 
         return redirect()->back();
+    }
+
+    public function store(StoreFileRequest $request)
+    {
+        $data = $request->validated();
+
+        dd($data);
     }
 
     private function getRoot()
