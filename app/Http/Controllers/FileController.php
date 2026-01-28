@@ -62,7 +62,9 @@ class FileController extends Controller
     {
         $data = $request->validated();
 
-        dd($data);
+        $fileTree = $request->file_tree;
+
+        dd($data, $fileTree);
     }
 
     private function getRoot()
