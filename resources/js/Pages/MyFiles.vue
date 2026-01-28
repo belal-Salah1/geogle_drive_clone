@@ -5,6 +5,8 @@ import { router } from '@inertiajs/vue3';
 
 const { files } = defineProps({
   files: Object,
+  folder: Object,
+  ancestors: Array,
 });
 
 function openFolder(file) {
@@ -16,6 +18,7 @@ function openFolder(file) {
 </script>
 
 <template>
+  {{ ancestors }}
   <table v-if="files.data.length" class="min-w-full">
     <thead class="bg-gray-100 border-b">
       <th class="text-sm font-medium trxt-gray-900 px-6 py-4 text-left">
