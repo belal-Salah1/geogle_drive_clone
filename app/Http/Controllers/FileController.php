@@ -62,9 +62,34 @@ class FileController extends Controller
     {
         $data = $request->validated();
 
+        $parent = $request->parent;
+        $user = $request->id;
         $fileTree = $request->file_tree;
 
-        dd($data, $fileTree);
+        if (! $parent) {
+            $parent = $this->getRoot();
+        }
+
+        if (! empty($fileTree)) {
+            $this->saveFileTree($fileTree, $parent, $user);
+        } else {
+            foreach ($data['files'] as $uploadedFile) {
+                $path = $file->store('/files/'.$user->id);
+                $model = new File;
+                $model->is_folder = 0;
+                $model->name = $uploadedFile->getClientOriginalName();
+                $model->size = $uploadedFile->getSize();
+                $model->mime = $uploadedFile->getMimeType();
+                // $model->created_by = $user;
+                $parent->appendNode($model);
+                $model->save();
+
+                $uploadedFile->storeAs($model->storagePath(), $model->name);
+            }
+
+        }
+
+        // dd($data, $fileTree);
     }
 
     private function getRoot()
