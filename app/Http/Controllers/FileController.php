@@ -32,7 +32,7 @@ class FileController extends Controller
 
         $files = FileResource::collection($files);
 
-        $ancestors = FileResource::collection([$folder->ancestors(), $folder]);
+        $ancestors = FileResource::collection($folder->ancestors()->get()->push($folder));
 
         $folder = new FileResource($folder);
 
