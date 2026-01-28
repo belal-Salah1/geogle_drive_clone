@@ -1,8 +1,9 @@
 <script setup>
+import FileIcon from '@/Components/app/fileIcon.vue';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
-defineOptions({ layout: AuthenticatedLayout });
+import fileIcon from '@/Components/app/fileIcon.vue';
 import { router } from '@inertiajs/vue3';
-
+defineOptions({ layout: AuthenticatedLayout });
 const { files } = defineProps({
   files: Object,
   folder: Object,
@@ -99,8 +100,9 @@ function openFolder(file) {
         class="cursor-pointer"
       >
         <td
-          class="bg-white border-b transition duration-300 ease-in-out hover:bg-gray-100 px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900"
+          class="bg-white border-b transition duration-300 ease-in-out flex items-center hover:bg-gray-100 px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900"
         >
+          <FileIcon :file="file" />
           {{ file.name }}
         </td>
         <td
