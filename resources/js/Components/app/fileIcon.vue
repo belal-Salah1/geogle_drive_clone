@@ -1,6 +1,15 @@
 <script setup>
 // imports
-import { isDocumentFile, isImageFile, isVideoFile } from '@/helper/file-helper';
+import {
+  isImageFile,
+  isVideoFile,
+  isAudioFile,
+  isPdfFile,
+  isWordFile,
+  isExcelFile,
+  isTextFile,
+  isArchiveFile,
+} from '@/helper/file-helper';
 
 // users
 
@@ -40,8 +49,42 @@ const { file } = defineProps({
         v-if="isImageFile(file.name)"
         class="w-6 h-6"
       />
-      <img src="" alt="" v-if="isVideoFile(file.name)" class="w-6 h-6" />
-      <img src="" alt="" v-if="isDocumentFile(file.name)" class="w-6 h-6" />
+      <img
+        src="/images/video.png"
+        v-else-if="isVideoFile(file.name)"
+        class="w-6 h-6"
+      />
+      <img
+        src="/images/audio.png"
+        v-else-if="isAudioFile(file.name)"
+        class="w-6 h-6"
+      />
+      <img
+        src="/images/pdf.png"
+        v-else-if="isPdfFile(file.name)"
+        class="w-6 h-6"
+      />
+      <img
+        src="/images/word-processor.png"
+        v-else-if="isWordFile(file.name)"
+        class="w-6 h-6"
+      />
+      <img
+        src="/images/sheets.png"
+        v-else-if="isExcelFile(file.name)"
+        class="w-6 h-6"
+      />
+      <img
+        src="/images/txt.png"
+        v-else-if="isTextFile(file.name)"
+        class="w-6 h-6"
+      />
+      <img
+        src="/images/zip.png"
+        v-else-if="isArchiveFile(file.name)"
+        class="w-6 h-6"
+      />
+      <img src="/images/attach-file.png" v-else class="w-6 h-6" />
     </template>
   </span>
 </template>
