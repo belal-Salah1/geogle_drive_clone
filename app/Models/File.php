@@ -38,9 +38,9 @@ class File extends Model
         );
     }
 
-    public function isRoot(): bool
+    public function storagePath(): string
     {
-        return $this->parent_id === null;
+        return $this->storage_path;
     }
 
     protected static function boot()
