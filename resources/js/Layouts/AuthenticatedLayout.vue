@@ -5,6 +5,7 @@ import UserSettingDropDown from '@/Components/app/UserSettingsDropDown.vue';
 import { emitter, FILE_UPLOAD_STARTED } from '@/event-bus';
 import { useForm, usePage } from '@inertiajs/vue3';
 import { onMounted, ref } from 'vue';
+import FormProgress from '@/Components/app/FormProgress.vue';
 
 const fileUploadForm = useForm({
   files: [],
@@ -74,6 +75,7 @@ onMounted(() => {
       </template>
     </main>
   </div>
+  <FormProgress :form="fileUploadForm" />
 </template>
 
 <style scoped>

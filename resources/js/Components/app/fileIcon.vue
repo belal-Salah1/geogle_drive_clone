@@ -9,6 +9,7 @@ import {
   isExcelFile,
   isTextFile,
   isArchiveFile,
+  isPowerPointFile,
 } from '@/helper/file-helper';
 
 // users
@@ -77,6 +78,11 @@ const { file } = defineProps({
       <img
         src="/images/txt.png"
         v-else-if="isTextFile(file.name)"
+        class="w-6 h-6"
+      />
+      <img
+        src="/images/attach-file.png"
+        v-else-if="isPowerPointFile(file.name)"
         class="w-6 h-6"
       />
       <img

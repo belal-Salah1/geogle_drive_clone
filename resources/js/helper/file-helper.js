@@ -88,3 +88,8 @@ export function isExcelFile(fileName) {
 export function isTextFile(fileName) {
   return fileName.toLowerCase().endsWith('.txt');
 }
+
+export function isPowerPointFile(fileName) {
+  const lower = fileName.toLowerCase();
+  return lower.endsWith('.ppt') || lower.endsWith('.pptx');
+}
