@@ -51,6 +51,10 @@ function uploadFiles(files) {
       }
       showErrorDialog({ message });
     },
+    onFinish: () => {
+      fileUploadForm.clearErrors();
+      fileUploadForm.reset();
+    },
   });
 }
 
