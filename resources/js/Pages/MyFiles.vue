@@ -5,7 +5,7 @@ import fileIcon from '@/Components/app/fileIcon.vue';
 import { router } from '@inertiajs/vue3';
 import { onMounted, ref, onUpdated } from 'vue';
 import { httpGet } from '@/helper/http-helper';
-import { data } from 'autoprefixer';
+import Checkbox from '@/Components/Checkbox.vue';
 defineOptions({ layout: AuthenticatedLayout });
 const props = defineProps({
   files: Object,
@@ -14,6 +14,8 @@ const props = defineProps({
 });
 
 const loadMoreIntersect = ref(null);
+const allSelected = ref(false);
+const selected = ref({});
 const allFiles = ref({
   data: props.files.data,
   next: null,
@@ -32,6 +34,12 @@ function loadMore() {
   httpGet(allFiles.value.next).then((res) => {
     allFiles.value.data = [...allFiles.value.data, ...res.data];
     allFiles.value.next = res.links.next;
+  });
+}
+
+function onSelectAllChange() {
+  allFiles.value.data.forEach((f) => {
+    selected.value[f.id] = allSelected.value;
   });
 }
 
@@ -114,8 +122,14 @@ onMounted(() => {
     </ol>
   </nav>
   <div class="flex-1 overflow-auto">
+    {{ selected }}
     <table v-if="allFiles.data.length" class="min-w-full">
       <thead class="bg-gray-100 border-b">
+        <th
+          class="text-sm font-medium trxt-gray-900 px-6 py-4 text-left w-[30px] max-w-[30px] pr-0"
+        >
+          <Checkbox @change="onSelectAllChange" v-model:checked="allSelected" />
+        </th>
         <th class="text-sm font-medium trxt-gray-900 px-6 py-4 text-left">
           Name
         </th>
@@ -125,7 +139,7 @@ onMounted(() => {
         <th class="text-sm font-medium trxt-gray-900 px-6 py-4 text-left">
           Last Modified
         </th>
-        <th class="text-sm font-medium trxt-gray-900 px-6 py-4 text-left">
+        <th class="text-sm font-medium text-gray-900 px-6 py-4 text-left">
           Size
         </th>
       </thead>
@@ -135,25 +149,36 @@ onMounted(() => {
           :key="file.id"
           @dblclick="openFolder(file)"
           class="cursor-pointer"
+          :class="
+            selected[file?.id] || allSelected ? 'bg-blue-100' : 'bg-white'
+          "
         >
           <td
-            class="bg-white border-b transition duration-300 ease-in-out flex items-center hover:bg-gray-100 px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900"
+            class="border-b transition duration-300 ease-in-out hover:bg-gray-100 px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 w-[30px] max-w-[30px] pr-0"
+          >
+            <Checkbox
+              v-model="selected[file.id]"
+              :checked="selected[file.id] || allSelected"
+            />
+          </td>
+          <td
+            class="border-b transition duration-300 ease-in-out flex items-center hover:bg-gray-100 px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900"
           >
             <FileIcon :file="file" />
             {{ file.name }}
           </td>
           <td
-            class="bg-white border-b transition duration-300 ease-in-out hover:bg-gray-100 px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900"
+            class="border-b transition duration-300 ease-in-out hover:bg-gray-100 px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900"
           >
             {{ file.owner }}
           </td>
           <td
-            class="bg-white border-b transition duration-300 ease-in-out hover:bg-gray-100 px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900"
+            class="border-b transition duration-300 ease-in-out hover:bg-gray-100 px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900"
           >
             {{ file.updated_at }}
           </td>
           <td
-            class="bg-white border-b transition duration-300 ease-in-out hover:bg-gray-100 px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900"
+            class="border-b transition duration-300 ease-in-out hover:bg-gray-100 px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900"
           >
             {{ file.size }}
           </td>

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\DestroyFilesRequest;
 use App\Http\Requests\StoreFileRequest;
 use App\Http\Requests\StoreFolderRequest;
 use App\Http\Resources\FileResource;
@@ -14,16 +15,14 @@ class FileController extends Controller
 {
     public function myFiles(Request $request, ?string $folder = null)
     {
+
         if ($folder) {
             $folder = File::query()->where('created_by', Auth::id())->where('path', $folder)->firstOrFail();
         }
-        // dd($folder);
 
         if (! $folder) {
             $folder = $this->getRoot();
         }
-        // dd($folder);
-        // $folder = $this->getRoot();
 
         $files = File::query()
             ->where('parent_id', $folder->id)
@@ -92,7 +91,6 @@ class FileController extends Controller
 
         }
 
-        // dd($data, $fileTree);
     }
 
     private function saveFileTree($tree, $parent, $user)
@@ -120,6 +118,29 @@ class FileController extends Controller
                 $file->storeAs($model->storagePath(), $model->name);
             }
         }
+    }
+
+    public function destroy(DestroyFilesRequest $request)
+    {
+
+        $data = $request->validated();
+        $parent = $request->parent;
+    if($data['all']){
+        $children = $parent ->children;
+        foreach ($children as $child) {
+            $child->delete();
+        }
+    }else{
+        foreach ($data['id'] ?? [] as $id) {
+            $file = File::find($id);
+            $file ->delete();
+            if ($file) {
+                $file->delete();
+            }
+        }
+    }
+      
+    return to_route('myFiles', ['folder' => $parent->path]);
     }
 
     private function getRoot()
