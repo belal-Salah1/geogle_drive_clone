@@ -43,6 +43,26 @@ function onSelectAllChange() {
   });
 }
 
+function toggleFileSelect(file) {
+  selected.value[file.id] = !selected.value[file.id];
+  onSelectCheckboxChange(file);
+}
+
+function onSelectCheckboxChange(file) {
+  if (!selected.value[file.id]) {
+    allSelected.value = false;
+  } else {
+    let checked = true;
+    for (let file of allFiles.value.data) {
+      if (!selected.value[file.id]) {
+        checked = false;
+        break;
+      }
+    }
+    allSelected.value = checked;
+  }
+}
+
 onUpdated(() => {
   allFiles.value = {
     data: props.files.data,
@@ -122,21 +142,22 @@ onMounted(() => {
     </ol>
   </nav>
   <div class="flex-1 overflow-auto">
-    {{ selected }}
+    <pre>{{ selected }}</pre>
+    <pre>{{ allSelected }}</pre>
     <table v-if="allFiles.data.length" class="min-w-full">
       <thead class="bg-gray-100 border-b">
         <th
-          class="text-sm font-medium trxt-gray-900 px-6 py-4 text-left w-[30px] max-w-[30px] pr-0"
+          class="text-sm font-medium text-gray-900 px-6 py-4 text-left w-[30px] max-w-[30px] pr-0"
         >
           <Checkbox @change="onSelectAllChange" v-model:checked="allSelected" />
         </th>
-        <th class="text-sm font-medium trxt-gray-900 px-6 py-4 text-left">
+        <th class="text-sm font-medium text-gray-900 px-6 py-4 text-left">
           Name
         </th>
-        <th class="text-sm font-medium trxt-gray-900 px-6 py-4 text-left">
+        <th class="text-sm font-medium text-gray-900 px-6 py-4 text-left">
           Owner
         </th>
-        <th class="text-sm font-medium trxt-gray-900 px-6 py-4 text-left">
+        <th class="text-sm font-medium text-gray-900 px-6 py-4 text-left">
           Last Modified
         </th>
         <th class="text-sm font-medium text-gray-900 px-6 py-4 text-left">
@@ -146,39 +167,38 @@ onMounted(() => {
       <tbody>
         <tr
           v-for="file of allFiles.data"
+          @click="($event) => toggleFileSelect(file)"
           :key="file.id"
           @dblclick="openFolder(file)"
-          class="cursor-pointer"
-          :class="
-            selected[file?.id] || allSelected ? 'bg-blue-100' : 'bg-white'
-          "
+          :class="`cursor-pointer hover:bg-gray-100 ${selected[file?.id] || allSelected ? 'bg-blue-100' : 'bg-white'}`"
         >
           <td
-            class="border-b transition duration-300 ease-in-out hover:bg-gray-100 px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 w-[30px] max-w-[30px] pr-0"
+            class="border-b transition duration-300 ease-in-out px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 w-[30px] max-w-[30px] pr-0"
           >
             <Checkbox
+              @change="onSelectCheckboxChange(file)"
               v-model="selected[file.id]"
               :checked="selected[file.id] || allSelected"
             />
           </td>
           <td
-            class="border-b transition duration-300 ease-in-out flex items-center hover:bg-gray-100 px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900"
+            class="border-b transition duration-300 ease-in-out flex items-center px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900"
           >
             <FileIcon :file="file" />
             {{ file.name }}
           </td>
           <td
-            class="border-b transition duration-300 ease-in-out hover:bg-gray-100 px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900"
+            class="border-b transition duration-300 ease-in-out px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900"
           >
             {{ file.owner }}
           </td>
           <td
-            class="border-b transition duration-300 ease-in-out hover:bg-gray-100 px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900"
+            class="border-b transition duration-300 ease-in-out px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900"
           >
             {{ file.updated_at }}
           </td>
           <td
-            class="border-b transition duration-300 ease-in-out hover:bg-gray-100 px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900"
+            class="border-b transition duration-300 ease-in-out px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900"
           >
             {{ file.size }}
           </td>
