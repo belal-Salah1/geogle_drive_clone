@@ -2,10 +2,11 @@
 import Navigation from '@/Components/app/Navigation.vue';
 import SearchForm from '@/Components/app/SearchForm.vue';
 import UserSettingDropDown from '@/Components/app/UserSettingsDropDown.vue';
-import { emitter, FILE_UPLOAD_STARTED } from '@/event-bus';
+import { emitter, FILE_UPLOAD_STARTED, showErrorDialog } from '@/event-bus';
 import { useForm, usePage } from '@inertiajs/vue3';
 import { onMounted, ref } from 'vue';
 import FormProgress from '@/Components/app/FormProgress.vue';
+import ErrorDialog from '@/Components/app/ErrorDialog.vue';
 
 const fileUploadForm = useForm({
   files: [],
@@ -41,8 +42,16 @@ function uploadFiles(files) {
     onSuccess: () => {
       fileUploadForm.reset();
     },
+    onError: (errors) => {
+      let message = '';
+      if (Object.keys(errors).length > 0) {
+        message = errors[Object.keys(errors)[0]];
+      } else {
+        message = 'An unknown error occurred during file upload.';
+      }
+      showErrorDialog({ message });
+    },
   });
-  console.log('file upload started listener in layout', files);
 }
 
 onMounted(() => {
@@ -75,6 +84,7 @@ onMounted(() => {
       </template>
     </main>
   </div>
+  <ErrorDialog />
   <FormProgress :form="fileUploadForm" />
 </template>
 
