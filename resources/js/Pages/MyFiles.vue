@@ -71,7 +71,10 @@ function onSelectCheckboxChange(file) {
     allSelected.value = checked;
   }
 }
-
+function onDelete() {
+  allSelected.value = false;
+  selected.value = {};
+}
 onUpdated(() => {
   allFiles.value = {
     data: props.files.data,
@@ -150,7 +153,11 @@ onMounted(() => {
       </li>
     </ol>
     <div>
-      <DeleteFilesButton :delete-all="allSelected" :delete-ids="selectedIds" />
+      <DeleteFilesButton
+        :delete-all="allSelected"
+        :delete-ids="selectedIds"
+        @delete="onDelete"
+      />
     </div>
   </nav>
   {{ selectedIds }}
