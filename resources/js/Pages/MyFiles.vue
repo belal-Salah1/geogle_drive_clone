@@ -3,19 +3,55 @@ import FileIcon from '@/Components/app/fileIcon.vue';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import fileIcon from '@/Components/app/fileIcon.vue';
 import { router } from '@inertiajs/vue3';
+import { onMounted, ref, onUpdated } from 'vue';
+import { httpGet } from '@/helper/http-helper';
+import { data } from 'autoprefixer';
 defineOptions({ layout: AuthenticatedLayout });
-const { files } = defineProps({
+const props = defineProps({
   files: Object,
   folder: Object,
   ancestors: Object,
 });
 
+const loadMoreIntersect = ref(null);
+const allFiles = ref({
+  data: props.files.data,
+  next: null,
+});
 function openFolder(file) {
   if (!file.is_folder) {
     return;
   }
   router.visit(route('myFiles', { folder: file.path }));
 }
+function loadMore() {
+  console.log(allFiles.value.next);
+  if (allFiles.value.next == null) {
+    return;
+  }
+  httpGet(allFiles.value.next).then((res) => {
+    allFiles.value.data = [...allFiles.value.data, ...res.data];
+    allFiles.value.next = res.links.next;
+  });
+}
+
+onUpdated(() => {
+  allFiles.value = {
+    data: props.files.data,
+    next: props.files.links.next,
+  };
+});
+
+onMounted(() => {
+  const observer = new IntersectionObserver(
+    (entries) => entries.forEach((entry) => entry.isIntersecting && loadMore()),
+    {
+      rootMargin: '-250px 0px 0px 0px',
+      threshold: 1.0,
+    }
+  );
+  observer.observe(loadMoreIntersect.value);
+});
 </script>
 
 <template>
@@ -77,56 +113,59 @@ function openFolder(file) {
       </li>
     </ol>
   </nav>
-  <table v-if="files.data.length" class="min-w-full">
-    <thead class="bg-gray-100 border-b">
-      <th class="text-sm font-medium trxt-gray-900 px-6 py-4 text-left">
-        Name
-      </th>
-      <th class="text-sm font-medium trxt-gray-900 px-6 py-4 text-left">
-        Owner
-      </th>
-      <th class="text-sm font-medium trxt-gray-900 px-6 py-4 text-left">
-        Last Modified
-      </th>
-      <th class="text-sm font-medium trxt-gray-900 px-6 py-4 text-left">
-        Size
-      </th>
-    </thead>
-    <tbody>
-      <tr
-        v-for="file of files.data"
-        :key="file.id"
-        @dblclick="openFolder(file)"
-        class="cursor-pointer"
-      >
-        <td
-          class="bg-white border-b transition duration-300 ease-in-out flex items-center hover:bg-gray-100 px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900"
+  <div class="flex-1 overflow-auto">
+    <table v-if="allFiles.data.length" class="min-w-full">
+      <thead class="bg-gray-100 border-b">
+        <th class="text-sm font-medium trxt-gray-900 px-6 py-4 text-left">
+          Name
+        </th>
+        <th class="text-sm font-medium trxt-gray-900 px-6 py-4 text-left">
+          Owner
+        </th>
+        <th class="text-sm font-medium trxt-gray-900 px-6 py-4 text-left">
+          Last Modified
+        </th>
+        <th class="text-sm font-medium trxt-gray-900 px-6 py-4 text-left">
+          Size
+        </th>
+      </thead>
+      <tbody>
+        <tr
+          v-for="file of allFiles.data"
+          :key="file.id"
+          @dblclick="openFolder(file)"
+          class="cursor-pointer"
         >
-          <FileIcon :file="file" />
-          {{ file.name }}
-        </td>
-        <td
-          class="bg-white border-b transition duration-300 ease-in-out hover:bg-gray-100 px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900"
-        >
-          {{ file.owner }}
-        </td>
-        <td
-          class="bg-white border-b transition duration-300 ease-in-out hover:bg-gray-100 px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900"
-        >
-          {{ file.updated_at }}
-        </td>
-        <td
-          class="bg-white border-b transition duration-300 ease-in-out hover:bg-gray-100 px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900"
-        >
-          {{ file.size }}
-        </td>
-      </tr>
-    </tbody>
-  </table>
-  <div
-    v-else
-    class="flex flex-col items-center justify-center h-96 text-gray-500"
-  >
-    There is no files in this folder.
+          <td
+            class="bg-white border-b transition duration-300 ease-in-out flex items-center hover:bg-gray-100 px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900"
+          >
+            <FileIcon :file="file" />
+            {{ file.name }}
+          </td>
+          <td
+            class="bg-white border-b transition duration-300 ease-in-out hover:bg-gray-100 px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900"
+          >
+            {{ file.owner }}
+          </td>
+          <td
+            class="bg-white border-b transition duration-300 ease-in-out hover:bg-gray-100 px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900"
+          >
+            {{ file.updated_at }}
+          </td>
+          <td
+            class="bg-white border-b transition duration-300 ease-in-out hover:bg-gray-100 px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900"
+          >
+            {{ file.size }}
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <div
+      v-if="!allFiles.data.length"
+      class="flex flex-col items-center justify-center h-96 text-gray-500"
+    >
+      There is no files in this folder.
+    </div>
+    <div ref="loadMoreIntersect"></div>
   </div>
 </template>
