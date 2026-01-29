@@ -24,7 +24,7 @@ function close() {
 
 // hooks
 onMounted(() => {
-  emitter.on(SHOW_ERROR_DIALOG, ({ message: msg }) => {
+  emitter.on(SHOW_ERROR_DIALOG, (msg) => {
     show.value = true;
     message.value = msg;
   });

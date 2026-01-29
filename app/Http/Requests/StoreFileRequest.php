@@ -32,6 +32,7 @@ class StoreFileRequest extends ParentIdBaseRequest
     public function rules(): array
     {
         return array_merge(parent::rules(), [
+            'files' => 'required|array',
             'files.*' => ['required', 'file', function ($atribute, $value, $fail) {
                 if (! $this->folder_name) {
 

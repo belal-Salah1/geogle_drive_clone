@@ -23,7 +23,7 @@ Route::controller(FileController::class)->middleware(['auth', 'verified'])->grou
     Route::post('/folder/create', 'createFolder')->name('folder.create');
 
     Route::post('/file', 'store')->name('file.store');
-    Route::post('/file', 'destroy')->name('file.delete');
+    Route::delete('/file', 'destroy')->name('file.delete');
 });
 
 Route::get('/dashboard', function () {

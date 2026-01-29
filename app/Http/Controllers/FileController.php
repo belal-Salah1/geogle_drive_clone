@@ -125,22 +125,21 @@ class FileController extends Controller
 
         $data = $request->validated();
         $parent = $request->parent;
-    if($data['all']){
-        $children = $parent ->children;
-        foreach ($children as $child) {
-            $child->delete();
-        }
-    }else{
-        foreach ($data['id'] ?? [] as $id) {
-            $file = File::find($id);
-            $file ->delete();
-            if ($file) {
-                $file->delete();
+        if ($data['all']) {
+            $children = $parent->children;
+            foreach ($children as $child) {
+                $child->delete();
+            }
+        } else {
+            foreach ($data['id'] ?? [] as $id) {
+                $file = File::where('id', $id)->where('created_by', Auth::id())->first();
+                if ($file) {
+                    $file->delete();
+                }
             }
         }
-    }
-      
-    return to_route('myFiles', ['folder' => $parent->path]);
+
+        return to_route('myFiles', ['folder' => $parent->path]);
     }
 
     private function getRoot()

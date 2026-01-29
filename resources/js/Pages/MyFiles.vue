@@ -3,8 +3,10 @@ import FileIcon from '@/Components/app/fileIcon.vue';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import fileIcon from '@/Components/app/fileIcon.vue';
 import { router } from '@inertiajs/vue3';
-import { onMounted, ref, onUpdated } from 'vue';
+import { onMounted, ref, onUpdated, computed } from 'vue';
 import { httpGet } from '@/helper/http-helper';
+import DeleteFilesButton from '@/Components/app/DeleteFilesButton.vue';
+
 import Checkbox from '@/Components/Checkbox.vue';
 defineOptions({ layout: AuthenticatedLayout });
 const props = defineProps({
@@ -20,6 +22,13 @@ const allFiles = ref({
   data: props.files.data,
   next: null,
 });
+
+const selectedIds = computed(() => {
+  return Object.entries(selected.value)
+    .filter((a) => a[1])
+    .map((a) => a[0]);
+});
+
 function openFolder(file) {
   if (!file.is_folder) {
     return;
@@ -83,7 +92,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <nav class="flex items-center justify-start p-2 mt-3">
+  <nav class="flex items-center justify-between p-2 mt-3">
     <ol class="inline-flex items-center space-x-1">
       <li
         v-for="(ans, index) of ancestors.data"
@@ -140,10 +149,12 @@ onMounted(() => {
         </svg>
       </li>
     </ol>
+    <div>
+      <DeleteFilesButton :delete-all="allSelected" :delete-ids="selectedIds" />
+    </div>
   </nav>
+  {{ selectedIds }}
   <div class="flex-1 overflow-auto">
-    <pre>{{ selected }}</pre>
-    <pre>{{ allSelected }}</pre>
     <table v-if="allFiles.data.length" class="min-w-full">
       <thead class="bg-gray-100 border-b">
         <th
